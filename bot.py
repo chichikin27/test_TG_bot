@@ -1,29 +1,30 @@
-5556326343:AAHMYo57MOTuVQ8zZl44N958A_QXVG6Bayc
+# 5556326343:AAHMYo57MOTuVQ8zZl44N958A_QXVG6Bayc
 
 import telegram
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, MessageHandler, Filters
 
-# функция-обработчик команды /start
-def start(update, context):
-    update.message.reply_text("Привет! Если ты Антон, то у тебя маленькая пиписька")
+# Задаем токен бота
+TOKEN = '5556326343:AAHMYo57MOTuVQ8zZl44N958A_QXVG6Bayc'
 
-# функция-обработчик для эхо-ответов на сообщения пользователя
-def echo(update, context):
-    update.message.reply_text(update.message.text)
+# Создаем объект бота
+bot = telegram.Bot(token=TOKEN)
 
-# создаем объект для взаимодействия с Telegram API
-bot = telegram.Bot(token='5556326343:AAHMYo57MOTuVQ8zZl44N958A_QXVG6Bayc')
+# Функция, которая будет вызываться при получении сообщения
+def reply_300(update, context):
+    # Отвечаем на сообщение числом 300
+    update.message.reply_text('Отсоси у тракториста))0)')
 
-# создаем объект Updater
-updater = Updater(token='5556326343:AAHMYo57MOTuVQ8zZl44N958A_QXVG6Bayc', use_context=True)
+# Создаем объект для получения обновлений от Telegram
+updater = Updater(token=TOKEN, use_context=True)
 
-# создаем обработчики команд и сообщений
-start_handler = CommandHandler('start', start)
-echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
+# Получаем диспетчер для обработки сообщений
+dispatcher = updater.dispatcher
 
-# запускаем обработчики команд и сообщений
-updater.dispatcher.add_handler(start_handler)
-updater.dispatcher.add_handler(echo_handler)
+# Создаем обработчик сообщений
+message_handler = MessageHandler(Filters.text, reply_300)
 
-# запускаем бота
+# Регистрируем обработчик в диспетчере
+dispatcher.add_handler(message_handler)
+
+# Запускаем бота
 updater.start_polling()
